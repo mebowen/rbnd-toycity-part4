@@ -6,7 +6,7 @@ class Udacidata
 
 @@data_path = File.dirname(__FILE__) + "/../data/data.csv"
 
-create_finder_methods(:brand, :name) 
+Module.create_finder_methods(:brand, :name) 
 
   def self.create(attributes = nil)
       if attributes[:id]
@@ -71,12 +71,25 @@ create_finder_methods(:brand, :name)
       end
   end
   
-  def self.where 
-      #should return an array of Product objects that match a given brand or product name.
+  def self.where(n = {})
+    n_array = self.all 
+    n.each_key do |key|
+      n_array = n_array.select do |item|
+        item.send(key).to_s == n.fetch(key).to_s
+      end
+    end
+    return n_array
   end
   
-#   def #product_instance.update ? 
-#       #should change the information for a given Product object, and save the new data to the database.
-#   end 
-
+  def update(options = {})
+    #should change the information for a given Product object, and save the new data to the database.
+    array_of_products = self.class.all
+    products_to_update = array_of_products.index{|item| item.id == @id} 
+    options.each_key do |key|
+      array_of_products[products_to_update].send(key.to_s, options.fetch(key))
+    end
+    self.class.rewrite_csv(array_of_products)
+    return array_of_products[products_to_update]
+  end
+  
 end
