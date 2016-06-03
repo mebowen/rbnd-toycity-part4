@@ -1,5 +1,5 @@
 class Module
-  def create_finder_methods(*attributes)
+  def self.create_finder_methods(*attributes)
     attributes.each do |attribute|
       define_find_by(attribute)
     end 
@@ -8,7 +8,7 @@ class Module
   def define_find_by(attribute)
     define_method("find_by_#{attribute}") do |argument|
       all.each do |item|
-         return item if item.send(attribute) == argument
+        return item if item.send(attribute) == argument
       end
     end
   end
