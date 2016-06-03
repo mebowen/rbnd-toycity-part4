@@ -14,7 +14,7 @@ create_finder_methods(:brand, :name)
           item = find(id)
           return item unless item == nil 
       end
-      item = self.new
+      item = self.new(attributes)
       self.save(item)
       return item
   end
@@ -86,10 +86,11 @@ create_finder_methods(:brand, :name)
     array_of_products = self.class.all
     products_to_update = array_of_products.index{|item| item.id == @id} 
     options.each_key do |key|
-      array_of_products[products_to_update].send(key.to_s, options.fetch(key))
+      array_of_products[products_to_update].send("#{key}=", options.fetch(key))
     end
     self.class.rewrite_csv(array_of_products)
     return array_of_products[products_to_update]
   end
   
+
 end
