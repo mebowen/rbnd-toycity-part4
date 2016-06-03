@@ -1,15 +1,17 @@
 class Module
-  def self.create_finder_methods(*attributes)
+
+  def create_finder_methods(*attributes)
     attributes.each do |attribute|
-      define_find_by(attribute)
+      class_eval %Q{
+        def self.find_by_#{attribute}(argument)
+          all = self.all()
+          found = all.select{|item| item.#{attribute} == argument}
+          if found.length > 0 
+            return found[0]
+          else
+            return nil
+          end
+        end}
     end 
-  end
-      
-  def define_find_by(attribute)
-    define_method("find_by_#{attribute}") do |argument|
-      all.each do |item|
-        return item if item.send(attribute) == argument
-      end
-    end
   end
 end
