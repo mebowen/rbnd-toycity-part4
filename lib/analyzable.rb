@@ -2,7 +2,7 @@ module Analyzable
   
   def average_price(products)
     #all_products.each do |price|
-    #price += price
+    #sum_of_price = price += price
     #sum_of_prices / all_products.count
   end
   
