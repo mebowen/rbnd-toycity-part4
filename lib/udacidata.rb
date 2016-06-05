@@ -29,7 +29,7 @@ create_finder_methods(:brand, :name)
       #return an array of the objects representing all the data in the database.
       all = CSV.read(@@data_path).drop(1)
       all.each_with_object([]) do |row, item|
-        item << Product.new(id: row[0], brand: row[1], name: row[2], price: row[3].to_i)
+        item << Product.new(id: row[0], brand: row[1], name: row[2], price: row[3])
       end
   end
   
@@ -46,9 +46,7 @@ create_finder_methods(:brand, :name)
   def self.find(n) 
       #should return an object for the product with a given product id.
       all.each do |item|
-        if item.id == n 
-          return item
-        end
+        return item if item.id == n 
       end
       raise ProductNotFoundError, "The id number you entered does not match a product in the database."
   end
@@ -92,5 +90,4 @@ create_finder_methods(:brand, :name)
     return array_of_products[products_to_update]
   end
   
-
 end
