@@ -7,7 +7,7 @@ class Module
           all = self.all()
           found_items = all.select{|item| item.#{attribute} == argument}
           if found_items.length > 0 
-            return found[0]
+            return found_items[0]
           else
             return nil
           end
