@@ -9,7 +9,6 @@ module Analyzable
     return average_price_variable
   end
 
-  
   def print_report(argument)
       report = "Average price of products: $#{average_price(argument)} \n"
       count_by_brand(argument).each do |brand, count| 
@@ -30,10 +29,11 @@ module Analyzable
     names = products.map {|p| p.name}
     count_by_attribute(names)
   end
+
+  def count_by_attribute(attribute)
+    attribute_hash = attribute.inject(Hash.new(0)) {|result, element| result[element] += 1 ;result}
+    attribute_hash
+  end
 end
 
 
-def count_by_attribute(attribute)
-  attribute_hash = attribute.inject(Hash.new(0)) {|result, element| result[element] += 1 ;result}
-  attribute_hash
-end
