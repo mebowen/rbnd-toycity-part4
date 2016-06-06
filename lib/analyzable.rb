@@ -17,6 +17,7 @@ module Analyzable
       count_by_name(argument).each do |name, count|
         report << "Number of products named #{name}: #{count} \n" 
       end
+      report << "Lowest price: $#{lowest_price(argument)} \n"
       return report 
   end
   
@@ -29,11 +30,21 @@ module Analyzable
     names = products.map {|p| p.name}
     count_by_attribute(names)
   end
-
+  
   def count_by_attribute(attribute)
     attribute_hash = attribute.inject(Hash.new(0)) {|result, element| result[element] += 1 ;result}
     attribute_hash
   end
+  
+  #NEW FEATURE
+  def lowest_price(products)
+    product_prices = []
+    products.each do |product|
+      product_prices << product.price.to_f
+    end
+    product_prices.sort.first
+  end
+  
 end
 
 
