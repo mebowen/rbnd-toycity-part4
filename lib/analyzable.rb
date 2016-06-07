@@ -1,12 +1,7 @@
 module Analyzable
 
   def average_price(products)
-    total_of_prices = 0 
-    products.each do |product|
-      total_of_prices += product.price.to_f
-    end
-    average_price_variable = (total_of_prices / products.length).round(2)
-    return average_price_variable
+    (products.inject(0){|sum, product| sum + product.price.to_f}/products.size).round(2)
   end
 
   def print_report(argument)
